@@ -88,12 +88,12 @@ func ConvertOperand(operand string) (int, bool, error) {
 
 	if err != nil {
 		// if can't convert
-		value64, errTemp := strconv.ParseFloat(operand, 64)
+		valueTemp, errTemp := strconv.ParseFloat(operand, 64)
 		err = errTemp
 		if err != nil {
 			err = fmt.Errorf("Не могу сконвертировать операнд '%s' в число.", operand)
 		} else {
-			err = fmt.Errorf("Калькулятор умеет работать только с целыми числами. '%f' -- дробное.\n", value64)
+			err = fmt.Errorf("Калькулятор умеет работать только с целыми числами. '%f' -- дробное.\n", valueTemp)
 		}
 		return 0, false, err
 	}
