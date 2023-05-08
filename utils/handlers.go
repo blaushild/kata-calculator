@@ -17,10 +17,10 @@ func SplitString(input string) ([]string, error) {
 	input = strings.TrimSpace(input)
 	splittedInput := strings.Split(input, " ")
 	if len(splittedInput) < 3 {
-		return splittedInput, fmt.Errorf(ErrorMessages[2])
+		return splittedInput, fmt.Errorf(ErrorMessages["notMathOperation"])
 	}
 	if len(splittedInput) > 3 {
-		return splittedInput, fmt.Errorf(ErrorMessages[3])
+		return splittedInput, fmt.Errorf(ErrorMessages["notSatisfy"])
 	}
 	return splittedInput, nil
 }
@@ -39,11 +39,11 @@ func PrepareOperands(a, b, operator string) (int, int, bool, error) {
 	}
 
 	if aIsArabic != bIsArabic {
-		err = fmt.Errorf(ErrorMessages[1])
+		err = fmt.Errorf(ErrorMessages["differentNumbers"])
 	}
 
 	if !(aIsArabic && bIsArabic) && (valueA < valueB) && operator == "-" {
-		err = fmt.Errorf(ErrorMessages[0])
+		err = fmt.Errorf(ErrorMessages["romanNegtive"])
 	}
 	if err != nil {
 		return 0, 0, false, err
@@ -64,6 +64,6 @@ func Calculte(a, b int, operator string) (int, error) {
 	case "/":
 		return int(a / b), nil
 	default:
-		return 0, fmt.Errorf("Оператор '%s' не определён.", operator)
+		return 0, fmt.Errorf(ErrorMessages["operatorNotDefined"], operator)
 	}
 }

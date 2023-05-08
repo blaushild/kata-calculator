@@ -22,7 +22,7 @@ func RomanToArabic(romanNumber string) (int, error) {
 	for _, c := range romanNumber {
 		value, exists := romanValues[c]
 		if !exists {
-			return 0, fmt.Errorf("Некорректный символ: %c", c)
+			return 0, fmt.Errorf(ErrorMessages["incorrectSymbol"], c)
 		}
 
 		if value > previousValue {
@@ -39,7 +39,7 @@ func RomanToArabic(romanNumber string) (int, error) {
 
 func ArabicToRoman(number int) (string, error) {
 	if number < 1 || number > 3999 {
-		return "", fmt.Errorf("Недопустимое значение числа: %d. Конвертация в римские числа возможна только для чисел в диапазоне 1..3999.", number)
+		return "", fmt.Errorf(ErrorMessages["romanOutOfRange"], number)
 	}
 
 	romanNumerals := []struct {
@@ -91,15 +91,15 @@ func ConvertOperand(operand string) (int, bool, error) {
 		valueTemp, errTemp := strconv.ParseFloat(operand, 64)
 		err = errTemp
 		if err != nil {
-			err = fmt.Errorf("Не могу сконвертировать операнд '%s' в число.", operand)
+			err = fmt.Errorf(ErrorMessages["numberCantConvert"], operand)
 		} else {
-			err = fmt.Errorf("Калькулятор умеет работать только с целыми числами. '%f' -- дробное.\n", valueTemp)
+			err = fmt.Errorf(ErrorMessages["onlyWholeNumbers"], valueTemp)
 		}
 		return 0, false, err
 	}
 
 	if 1 > value || value > 10 {
-		err = fmt.Errorf("Число %d находится за пределами диапазона 1..10", value)
+		err = fmt.Errorf(ErrorMessages["valueOutOfRange"], value)
 		return 0, false, err
 	}
 
